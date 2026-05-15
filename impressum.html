@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trivar — Impressum</title>
+<link rel="icon" type="image/png" href="trivar-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+  .legal-hero { padding: 160px 0 60px; }
+  .legal-hero .eyebrow { margin-bottom: 24px; }
+  .legal-hero h1 { font-size: clamp(40px, 6vw, 76px); font-weight: 200; line-height: 1.02; letter-spacing: -0.04em; margin-bottom: 24px; color: var(--txt-hi); }
+  .legal-hero h1 b { font-weight: 800; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .legal-hero .lede { font-size: clamp(16px, 1.4vw, 19px); color: var(--txt-md); max-width: 720px; }
+
+  .legal-body { padding: 40px 0 120px; }
+  .legal-grid { display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: start; }
+  @media (max-width: 920px) { .legal-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+  .legal-toc {
+    position: sticky; top: 100px;
+    padding: 24px; border-radius: var(--radius-l);
+    background: rgba(10, 31, 71, 0.4);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(16px);
+  }
+  @media (max-width: 920px) { .legal-toc { position: static; } }
+  .legal-toc h4 { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bright); font-weight: 700; margin-bottom: 16px; }
+  .legal-toc ol { list-style: none; counter-reset: toc; }
+  .legal-toc li { counter-increment: toc; padding: 8px 0; border-bottom: 1px solid var(--line-lt); }
+  .legal-toc li:last-child { border-bottom: none; }
+  .legal-toc a { color: var(--txt-md); text-decoration: none; font-size: 14px; transition: color 0.2s; display: block; }
+  .legal-toc a::before { content: counter(toc, decimal-leading-zero) " · "; color: var(--chrome); font-weight: 700; }
+  .legal-toc a:hover { color: var(--cyan); }
+
+  .legal-content { display: flex; flex-direction: column; gap: 48px; }
+  .legal-section { padding: 32px clamp(24px, 3vw, 40px); border-radius: var(--radius-l); background: var(--grad-card); border: 1px solid var(--line); backdrop-filter: blur(16px); }
+  .legal-section h2 { font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; color: var(--txt-hi); margin-bottom: 20px; letter-spacing: -0.01em; display: flex; align-items: baseline; gap: 16px; }
+  .legal-section h2 .num { font-family: 'Inter', monospace; font-weight: 800; font-size: 14px; letter-spacing: 0.15em; color: var(--bright); padding: 4px 12px; border-radius: 100px; background: rgba(102, 170, 220, 0.12); border: 1px solid rgba(102, 170, 220, 0.3); }
+  .legal-section .body { color: var(--txt-md); font-size: 15px; line-height: 1.75; white-space: pre-line; }
+  .legal-section .body strong { color: var(--cyan); font-weight: 600; }
+  .legal-section .body a { color: var(--bright); text-decoration: none; border-bottom: 1px solid rgba(102, 170, 220, 0.3); transition: all 0.2s; }
+  .legal-section .body a:hover { color: var(--cyan); border-color: var(--cyan); }
+
+  .contact-block { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 16px; font-size: 15px; color: var(--txt-md); }
+  .contact-block .lbl { color: var(--bright); font-weight: 600; }
+  .contact-block a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(164, 222, 250, 0.3); }
+
+  .legal-note { margin-top: 32px; text-align: center; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--txt-lo); }
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div><div class="grain"></div>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="nav-brand"><img src="trivar-icon.png" alt="Trivar" /><span class="name">TRIVAR</span></a>
+    <button class="nav-burger" aria-label="Menu"><span></span></button>
+    <div class="nav-links">
+      <div class="lang-toggle"><button data-lang="de">DE</button><button data-lang="en">EN</button></div>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a>
+      <a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a>
+      <a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a>
+      <a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a>
+      <a href="kontakt.html" class="nav-cta" data-i18n="nav.contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header class="legal-hero">
+  <div class="container">
+    <div class="eyebrow fade-1"><span class="pulse"></span><span data-i18n="imp.eyebrow">Impressum nach § 5 TMG</span></div>
+    <h1 class="fade-2"><span data-i18n="imp.title.a">Anbieter-</span><b data-i18n="imp.title.b">kennzeichnung.</b></h1>
+    <p class="lede fade-3" data-i18n="imp.lede">Vollständige rechtliche Informationen über die Trivar UG (haftungsbeschränkt) gemäß deutschem Telemediengesetz und Mediendienste-Staatsvertrag.</p>
+  </div>
+</header>
+
+<main class="legal-body">
+  <div class="container">
+    <div class="legal-grid">
+      <aside class="legal-toc reveal">
+        <h4 data-i18n="dp.toc">Inhalt dieser Erklärung</h4>
+        <ol>
+          <li><a href="#s1" data-i18n="imp.s1">Diensteanbieter</a></li>
+          <li><a href="#s2" data-i18n="imp.s2">Vertretungsberechtigt</a></li>
+          <li><a href="#s3" data-i18n="imp.s3">Kontakt</a></li>
+          <li><a href="#s4" data-i18n="imp.s4">Registereintrag</a></li>
+          <li><a href="#s5" data-i18n="imp.s5">Umsatzsteuer-ID</a></li>
+          <li><a href="#s6" data-i18n="imp.s6">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</a></li>
+          <li><a href="#s7" data-i18n="imp.s7">Streitbeilegung</a></li>
+          <li><a href="#s8" data-i18n="imp.s8">Haftung für Inhalte</a></li>
+          <li><a href="#s9" data-i18n="imp.s9">Haftung für Links</a></li>
+          <li><a href="#s10" data-i18n="imp.s10">Urheberrecht</a></li>
+        </ol>
+      </aside>
+
+      <div class="legal-content">
+        <section id="s1" class="legal-section reveal">
+          <h2><span class="num">01</span><span data-i18n="imp.s1">Diensteanbieter</span></h2>
+          <div class="body" data-i18n="imp.s1.body">Trivar UG (haftungsbeschränkt)
+Schacht-Neu-Cöln 26
+45355 Essen
+Deutschland</div>
+        </section>
+
+        <section id="s2" class="legal-section reveal">
+          <h2><span class="num">02</span><span data-i18n="imp.s2">Vertretungsberechtigt</span></h2>
+          <div class="body" data-i18n="imp.s2.body">Geschäftsführer: Karan Ahluwalia</div>
+        </section>
+
+        <section id="s3" class="legal-section reveal">
+          <h2><span class="num">03</span><span data-i18n="imp.s3">Kontakt</span></h2>
+          <div class="contact-block">
+            <span class="lbl" data-i18n="imp.s3.email">E-Mail</span><a href="mailto:Contact@trivar.eu">Contact@trivar.eu</a>
+            <span class="lbl" data-i18n="imp.s3.phone">Telefon</span><a href="tel:+491637240948">+49 163 7240948</a>
+            <span class="lbl" data-i18n="imp.s3.web">Website</span><a href="https://trivar.eu">trivar.eu</a>
+          </div>
+        </section>
+
+        <section id="s4" class="legal-section reveal">
+          <h2><span class="num">04</span><span data-i18n="imp.s4">Registereintrag</span></h2>
+          <div class="body" data-i18n="imp.s4.body">Eintragung im Handelsregister.
+Registergericht: Amtsgericht Essen
+Registernummer: HRB 37313</div>
+        </section>
+
+        <section id="s5" class="legal-section reveal">
+          <h2><span class="num">05</span><span data-i18n="imp.s5">Umsatzsteuer-ID</span></h2>
+          <div class="body" data-i18n="imp.s5.body">Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: wird nach Erteilung ergänzt.</div>
+        </section>
+
+        <section id="s6" class="legal-section reveal">
+          <h2><span class="num">06</span><span data-i18n="imp.s6">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</span></h2>
+          <div class="body" data-i18n="imp.s6.body">Karan Ahluwalia
+Schacht-Neu-Cöln 26
+45355 Essen
+Deutschland</div>
+        </section>
+
+        <section id="s7" class="legal-section reveal">
+          <h2><span class="num">07</span><span data-i18n="imp.s7">Streitbeilegung</span></h2>
+          <div class="body" data-i18n="imp.s7.body">Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: ec.europa.eu/consumers/odr. Unsere E-Mail-Adresse finden Sie oben in diesem Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</div>
+        </section>
+
+        <section id="s8" class="legal-section reveal">
+          <h2><span class="num">08</span><span data-i18n="imp.s8">Haftung für Inhalte</span></h2>
+          <div class="body" data-i18n="imp.s8.body">Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</div>
+        </section>
+
+        <section id="s9" class="legal-section reveal">
+          <h2><span class="num">09</span><span data-i18n="imp.s9">Haftung für Links</span></h2>
+          <div class="body" data-i18n="imp.s9.body">Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</div>
+        </section>
+
+        <section id="s10" class="legal-section reveal">
+          <h2><span class="num">10</span><span data-i18n="imp.s10">Urheberrecht</span></h2>
+          <div class="body" data-i18n="imp.s10.body">Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</div>
+        </section>
+
+        <p class="legal-note" data-i18n="imp.note">Stand: April 2026</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="trivar-icon.png" alt="Trivar" /><p><strong style="color:var(--cyan);">Trivar UG</strong> — <span data-i18n="foot.brand">Klimaneutrale Werbelogistik & Lebensberatung. Made in Essen, geliefert in ganz Deutschland.</span></p></div>
+      <div class="footer-col"><h5 data-i18n="foot.col1">Services</h5><a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a><a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a><a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a><a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col2">Unternehmen</h5><a href="index.html" data-i18n="nav.home">Home</a><a href="kontakt.html" data-i18n="foot.col2.contact">Kontakt</a><a href="karriere.html" data-i18n="foot.col2.careers">Karriere</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col3">Rechtliches</h5><a href="impressum.html" data-i18n="foot.col3.imp">Impressum</a><a href="datenschutz.html" data-i18n="foot.col3.privacy">Datenschutz</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="foot.copyright">© 2026 Trivar UG (haftungsbeschränkt). Alle Rechte vorbehalten.</span><span data-i18n="foot.bottom">Essen · Deutschland · DE / EN / HI / TE / UR</span></div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+/* TRIVAR — shared interactions */
+
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// Mouse-follow glow on glass cards
+document.querySelectorAll('.glass-card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', mx + '%');
+    card.style.setProperty('--my', my + '%');
+  });
+});
+
+// Mobile burger menu
+const burger = document.querySelector('.nav-burger');
+const navLinks = document.querySelector('.nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a:not(.nav-cta)').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+</script>
+<script src="scripts.js"></script>
+</body>
+</html>

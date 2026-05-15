@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trivar — Chancenkarte / Opportunity Card</title>
+<link rel="icon" type="image/png" href="trivar-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero { min-height: 90vh; padding: 140px 0 80px; display: flex; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+  h1.hero-title { font-size: clamp(40px, 6.5vw, 84px); font-weight: 200; line-height: 0.98; letter-spacing: -0.04em; margin: 28px 0; }
+  h1.hero-title .strong { font-weight: 800; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1.hero-title .italic-thin { font-style: italic; font-weight: 200; color: var(--chrome); }
+  .hero-sub { font-size: clamp(16px, 1.4vw, 19px); color: var(--txt-md); max-width: 560px; margin-bottom: 40px; }
+  .ck-hero-card { position: relative; aspect-ratio: 1.58; border-radius: 20px; background: radial-gradient(circle at 70% 20%, rgba(102, 170, 220, 0.2), transparent 50%), linear-gradient(135deg, rgba(6, 17, 45,0.95), rgba(21, 62, 117,0.9) 50%, rgba(53, 111, 174,0.7)); border: 1px solid rgba(90, 122, 156, 0.6); box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2); padding: clamp(24px, 4vw, 40px); overflow: hidden; transform: rotate(-2deg); animation: ckFloat 8s ease-in-out infinite; }
+  @keyframes ckFloat { 0%,100%{transform:rotate(-2deg) translateY(0);} 50%{transform:rotate(-2deg) translateY(-12px);} }
+  .ck-hero-card::before { content: 'OPPORTUNITY CARD'; position: absolute; bottom: 16px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.4em; color: rgba(90, 122, 156, 0.6); font-weight: 700; }
+  .ck-hero-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+  .ck-hero-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
+  .ck-hero-title { font-size: clamp(20px, 2.5vw, 28px); font-weight: 800; color: var(--txt-hi); margin-top: 8px; letter-spacing: -0.01em; }
+  .ck-hero-flag { display: flex; gap: 4px; }
+  .ck-hero-flag span { display: block; width: 16px; height: 28px; border-radius: 2px; }
+  .ck-hero-flag .s1 { background: #1a1a1a; } .ck-hero-flag .s2 { background: #cc1518; } .ck-hero-flag .s3 { background: #ffcc00; }
+  .ck-hero-points { display: flex; gap: 6px; margin: 24px 0; }
+  .ck-hero-points .pt { width: clamp(28px, 4vw, 40px); height: clamp(28px, 4vw, 40px); border-radius: 8px; background: linear-gradient(135deg, var(--steel), var(--chrome)); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--txt-hi); font-size: clamp(14px, 1.6vw, 18px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3); }
+  .ck-hero-points .pt.dim { background: rgba(53, 111, 174, 0.18); border: 1px solid rgba(53, 111, 174, 0.3); color: rgba(90, 122, 156, 0.6); box-shadow: none; }
+  .ck-hero-meta { display: flex; justify-content: space-between; align-items: flex-end; }
+  .ck-hero-meta .lbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--txt-lo); }
+  .ck-hero-meta .val { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--txt-hi); margin-top: 4px; letter-spacing: 0.1em; }
+  .elig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 820px) { .elig-grid { grid-template-columns: 1fr; } }
+  .elig-card { padding: 36px 32px; border-radius: var(--radius-l); background: linear-gradient(180deg, rgba(53, 111, 174, 0.1), rgba(53, 111, 174,0.02)); border: 1px solid rgba(53, 111, 174, 0.2); }
+  .elig-card.gold { border-color: rgba(102, 170, 220, 0.4); background: linear-gradient(180deg, rgba(102, 170, 220, 0.12), rgba(53, 111, 174,0.04)); }
+  .elig-card .lbl { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--chrome); font-weight: 700; margin-bottom: 12px; }
+  .elig-card.gold .lbl { color: var(--bright); }
+  .elig-card h3 { font-size: 26px; font-weight: 800; color: var(--txt-hi); margin-bottom: 12px; letter-spacing: -0.01em; }
+  .elig-card > p { font-size: 15px; color: var(--txt-md); margin-bottom: 24px; line-height: 1.65; }
+  .calc-wrap { padding: clamp(28px, 4vw, 56px); border-radius: var(--radius-xl); background: radial-gradient(circle at 0% 0%, rgba(53, 111, 174, 0.18), transparent 50%), radial-gradient(circle at 100% 100%, rgba(102, 170, 220, 0.12), transparent 50%), linear-gradient(180deg, rgba(6, 17, 45, 0.65), rgba(3, 9, 26, 0.45)); border: 1px solid rgba(53, 111, 174, 0.25); }
+  .calc-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+  @media (max-width: 920px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-q { padding: 20px 0; border-bottom: 1px solid rgba(53, 111, 174, 0.15); }
+  .calc-q:last-child { border-bottom: none; }
+  .calc-q label { display: block; font-size: 14px; font-weight: 600; color: var(--txt-hi); margin-bottom: 10px; }
+  .calc-q .hint { font-size: 12px; color: var(--txt-lo); margin-bottom: 12px; }
+  .calc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .calc-options input[type="radio"] { display: none; }
+  .calc-options label.opt { padding: 10px 16px; border-radius: 100px; background: rgba(53, 111, 174, 0.08); border: 1px solid rgba(53, 111, 174, 0.2); font-size: 13px; color: var(--cyan); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; margin-bottom: 0; font-weight: 500; }
+  .calc-options label.opt:hover { border-color: rgba(102, 170, 220, 0.4); background: rgba(53, 111, 174, 0.15); }
+  .calc-options input[type="radio"]:checked + label.opt { background: linear-gradient(135deg, var(--chrome), var(--steel)); border-color: var(--txt-lo); color: var(--txt-hi); font-weight: 700; box-shadow: 0 8px 20px rgba(53, 111, 174, 0.4); }
+  .calc-options label.opt .pts { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(102, 170, 220, 0.2); color: var(--bright); }
+  .calc-options input[type="radio"]:checked + label.opt .pts { background: rgba(3, 9, 26, 0.45); color: var(--txt-hi); }
+  .calc-result { position: sticky; top: 100px; padding: 32px; border-radius: var(--radius-l); background: linear-gradient(180deg, rgba(53, 111, 174, 0.22), rgba(3, 9, 26, 0.55)); border: 1px solid rgba(102, 170, 220, 0.4); text-align: center; }
+  .calc-result .label-top { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--chrome); font-weight: 700; }
+  .calc-result .score { font-size: 80px; font-weight: 200; line-height: 1; margin: 16px 0 4px; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.04em; }
+  .calc-result .score b { font-weight: 800; }
+  .calc-result .of { font-size: 14px; color: var(--txt-lo); }
+  .calc-result .verdict { margin-top: 24px; padding: 16px; border-radius: var(--radius-m); font-size: 14px; font-weight: 600; transition: all 0.3s; }
+  .calc-result .verdict.qualified { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ade80; }
+  .calc-result .verdict.almost { background: rgba(102, 170, 220, 0.12); border: 1px solid rgba(102, 170, 220, 0.3); color: var(--cyan); }
+  .calc-result .verdict.not-yet { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+  .calc-result .verdict-text { font-size: 13px; color: var(--txt-md); font-weight: 400; margin-top: 8px; }
+  .calc-bar { height: 6px; border-radius: 3px; background: rgba(53, 111, 174, 0.18); margin: 24px 0 8px; overflow: hidden; }
+  .calc-bar > div { height: 100%; background: linear-gradient(90deg, var(--chrome), var(--bright), var(--cyan)); transition: width 0.5s ease; border-radius: 3px; }
+  .calc-cta { margin-top: 24px; }
+  .calc-cta .btn-primary { width: 100%; justify-content: center; }
+  .process-wrap { position: relative; }
+  .process-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, var(--chrome) 20%, var(--chrome) 80%, transparent); opacity: 0.3; }
+  @media (max-width: 820px) { .process-line { left: 28px; } }
+  .process-step { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; margin-bottom: 60px; position: relative; }
+  .process-step:last-child { margin-bottom: 0; }
+  @media (max-width: 820px) { .process-step { grid-template-columns: 56px 1fr; gap: 24px; } .process-step .process-spacer { display: none; } }
+  .process-content { padding: 28px; background: rgba(6, 17, 45, 0.45); border: 1px solid rgba(53, 111, 174, 0.2); border-radius: var(--radius-m); }
+  .process-content .step-num { font-size: 12px; letter-spacing: 0.2em; color: var(--chrome); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+  .process-content h4 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--txt-hi); }
+  .process-content p { color: var(--txt-md); font-size: 15px; }
+  .process-step:nth-child(even) .process-content:nth-of-type(1) { grid-column: 3; }
+  .process-step:nth-child(even) .process-spacer { grid-column: 1; }
+  @media (max-width: 820px) { .process-step .process-content { grid-column: 2 !important; } .process-step .process-spacer { display: none !important; } }
+  .process-node { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--chrome), var(--steel)); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--txt-hi); font-size: 18px; box-shadow: 0 0 0 8px var(--abyss), 0 0 0 9px rgba(53, 111, 174, 0.3), 0 0 30px rgba(53, 111, 174, 0.5); position: relative; z-index: 2; }
+  @media (max-width: 820px) { .process-node { grid-column: 1; grid-row: 1; } }
+  .what-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 960px) { .what-grid { grid-template-columns: 1fr; } }
+  .faq { max-width: 820px; margin: 0 auto; }
+  .faq-item { padding: 24px 0; border-bottom: 1px solid rgba(53, 111, 174, 0.18); cursor: pointer; }
+  .faq-item summary { list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 600; color: var(--txt-hi); cursor: pointer; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 28px; font-weight: 200; color: var(--chrome); transition: transform 0.3s; line-height: 1; }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { margin-top: 14px; color: var(--txt-md); font-size: 15px; line-height: 1.7; }
+  .info-note { padding: 16px 20px; border-radius: var(--radius-m); background: rgba(53, 111, 174, 0.1); border: 1px solid rgba(53, 111, 174, 0.2); font-size: 13px; color: var(--txt-md); margin-top: 24px; }
+  .info-note strong { color: var(--cyan); }
+
+  .hero { position: relative; overflow: hidden; }
+  .oc-hero-bg { position: absolute; inset: 0; z-index: 0; opacity: 0.18; pointer-events: none; }
+  .oc-hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.5) brightness(0.45) contrast(1.05) hue-rotate(-15deg); }
+  .oc-hero-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, var(--abyss) 80%); }
+  .hero > .container { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div><div class="grain"></div>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="nav-brand"><img src="trivar-icon.png" alt="Trivar" /><span class="name">TRIVAR</span></a>
+    <button class="nav-burger" aria-label="Menu"><span></span></button>
+    <div class="nav-links">
+      <div class="lang-toggle"><button data-lang="de">DE</button><button data-lang="en">EN</button></div>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a>
+      <a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a>
+      <a href="opportunity-card.html" class="active" data-i18n="nav.card">Opportunity Card</a>
+      <a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a>
+      <a href="kontakt.html" class="nav-cta" data-i18n="nav.contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="oc-hero-bg" aria-hidden="true">
+        <img src="https://images.pexels.com/photos/8112180/pexels-photo-8112180.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" loading="eager" />
+      </div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow fade-1"><span class="pulse"></span><span data-i18n="oc.eyebrow">Neu seit 2024 · § 20a AufenthG</span></div>
+        <h1 class="hero-title fade-2">
+          <span data-i18n="oc.title.l1">Deutschland</span><br />
+          <span class="strong" data-i18n="oc.title.l2">ohne Jobangebot.</span><br />
+          <span class="italic-thin" data-i18n="oc.title.l3">12 Monate Zeit.</span>
+        </h1>
+        <p class="hero-sub fade-3" data-i18n="oc.sub">Die Chancenkarte ist Deutschlands neuer Visumtyp für Fachkräfte aus Drittstaaten.</p>
+        <div class="cta-row fade-4">
+          <a href="#calculator" class="btn-primary"><span data-i18n="oc.cta1">6-Punkte-Check starten</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a href="#process" class="btn-ghost" data-i18n="oc.cta2">So läuft's ab</a>
+        </div>
+      </div>
+      <div>
+        <div class="ck-hero-card">
+          <div class="ck-hero-top">
+            <div>
+              <div class="ck-hero-label" data-i18n="oc.card.label">Opportunity Card</div>
+              <div class="ck-hero-title" data-i18n="oc.card.title">Bundesrepublik Deutschland</div>
+            </div>
+            <div class="ck-hero-flag"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
+          </div>
+          <div class="ck-hero-points">
+            <div class="pt">1</div><div class="pt">2</div><div class="pt">3</div>
+            <div class="pt">4</div><div class="pt">5</div><div class="pt">6</div>
+            <div class="pt dim">7</div><div class="pt dim">8</div>
+          </div>
+          <div class="ck-hero-meta">
+            <div><div class="lbl" data-i18n="oc.card.l1">Gültigkeit</div><div class="val" data-i18n="oc.card.v1">12 Monate</div></div>
+            <div><div class="lbl" data-i18n="oc.card.l2">Arbeit</div><div class="val" data-i18n="oc.card.v2">20 Std. / Woche</div></div>
+            <div><div class="lbl" data-i18n="oc.card.l3">Antragsbasis</div><div class="val">§ 20a AufenthG</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="stats-band reveal">
+    <div class="stat-item"><div class="big">6</div><div class="label" data-i18n="oc.band1">Punkte minimum</div></div>
+    <div class="stat-item"><div class="big">12</div><div class="label" data-i18n="oc.band2">Monate Aufenthalt</div></div>
+    <div class="stat-item"><div class="big">20h</div><div class="label" data-i18n="oc.band3">Teilzeit erlaubt</div></div>
+    <div class="stat-item"><div class="big">€13.092</div><div class="label" data-i18n="oc.band4">Sperrkonto / Jahr</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="oc.elig.eyebrow">Eligibility</div>
+      <h2 class="section-title"><span data-i18n="oc.elig.title.a">Zwei Wege.</span><br /><b data-i18n="oc.elig.title.b">Eine Karte.</b></h2>
+      <p class="section-lede" data-i18n="oc.elig.lede">Zwei Routen — abhängig davon, ob Ihr Abschluss anerkannt ist.</p>
+    </div>
+
+    <div class="elig-grid">
+      <div class="elig-card reveal">
+        <div class="lbl" data-i18n="oc.r1.label">Route 01 · Direkt</div>
+        <h3 data-i18n="oc.r1.title">Anerkannte Fachkraft</h3>
+        <p data-i18n="oc.r1.body">Wenn Ihr Abschluss anerkannt ist, qualifizieren Sie sich direkt.</p>
+        <ul class="check-list">
+          <li data-i18n="oc.r1.l1">Anerkannter Hochschulabschluss</li>
+          <li data-i18n="oc.r1.l2">Finanzieller Nachweis (€13.092/Jahr)</li>
+          <li data-i18n="oc.r1.l3">Kein Sprachnachweis zwingend</li>
+          <li data-i18n="oc.r1.l4">Kein Mindestpunktestand</li>
+        </ul>
+      </div>
+      <div class="elig-card gold reveal">
+        <div class="lbl" data-i18n="oc.r2.label">Route 02 · Punktesystem</div>
+        <h3 data-i18n="oc.r2.title">Mindestens 6 Punkte</h3>
+        <p data-i18n="oc.r2.body">Wenn Ihr Abschluss noch nicht anerkannt ist, qualifizieren Sie sich über das Punktesystem.</p>
+        <ul class="check-list">
+          <li data-i18n="oc.r2.l1">Im Heimatland anerkannter Abschluss (≥ 2 Jahre)</li>
+          <li data-i18n="oc.r2.l2">Deutsch A1 oder Englisch B2 (CEFR)</li>
+          <li data-i18n="oc.r2.l3">Finanzieller Nachweis (€13.092/Jahr)</li>
+          <li data-i18n="oc.r2.l4">Min. 6 Punkte im Punktesystem</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-note reveal" data-i18n="oc.note.elig"><strong>Wichtig:</strong> Mit der Chancenkarte können Sie bis zu 20 Std./Woche arbeiten und kurze Probebeschäftigungen annehmen.</div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="oc.calc.eyebrow">Selbst-Check</div>
+      <h2 class="section-title"><span data-i18n="oc.calc.title.a">Wie viele Punkte</span><br /><b data-i18n="oc.calc.title.b">haben Sie?</b></h2>
+      <p class="section-lede" data-i18n="oc.calc.lede">Beantworten Sie die Fragen — Ihr Ergebnis aktualisiert sich live.</p>
+    </div>
+
+    <div class="calc-wrap reveal">
+      <div class="calc-grid">
+        <div>
+          <div class="calc-q">
+            <label data-i18n="oc.q1.l">1 · Anerkennung Ihrer Qualifikation</label>
+            <div class="hint" data-i18n="oc.q1.h">Bis zu 4 Punkte.</div>
+            <div class="calc-options">
+              <input type="radio" id="q1-0" name="q1" value="0" checked /><label for="q1-0" class="opt"><span data-i18n="oc.q1.o0">Keine / unklar</span> <span class="pts">0</span></label>
+              <input type="radio" id="q1-3" name="q1" value="3" /><label for="q1-3" class="opt"><span data-i18n="oc.q1.o1">Teilweise anerkannt</span> <span class="pts">+3</span></label>
+              <input type="radio" id="q1-4" name="q1" value="4" /><label for="q1-4" class="opt"><span data-i18n="oc.q1.o2">Anerkennung in Mangelberuf</span> <span class="pts">+4</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q2.l">2 · Berufserfahrung</label>
+            <div class="hint" data-i18n="oc.q2.h">Erfahrung in den letzten 7 Jahren.</div>
+            <div class="calc-options">
+              <input type="radio" id="q2-0" name="q2" value="0" checked /><label for="q2-0" class="opt"><span data-i18n="oc.q2.o0">Keine / < 2 Jahre</span> <span class="pts">0</span></label>
+              <input type="radio" id="q2-2" name="q2" value="2" /><label for="q2-2" class="opt"><span data-i18n="oc.q2.o1">2–4 Jahre</span> <span class="pts">+2</span></label>
+              <input type="radio" id="q2-3" name="q2" value="3" /><label for="q2-3" class="opt"><span data-i18n="oc.q2.o2">5+ Jahre</span> <span class="pts">+3</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q3.l">3 · Deutsch-Kenntnisse</label>
+            <div class="hint" data-i18n="oc.q3.h">CEFR-Zertifikat.</div>
+            <div class="calc-options">
+              <input type="radio" id="q3-0" name="q3" value="0" checked /><label for="q3-0" class="opt"><span data-i18n="oc.q3.o0">Unter A1</span> <span class="pts">0</span></label>
+              <input type="radio" id="q3-1" name="q3" value="1" /><label for="q3-1" class="opt">A2 <span class="pts">+1</span></label>
+              <input type="radio" id="q3-2" name="q3" value="2" /><label for="q3-2" class="opt">B1 <span class="pts">+2</span></label>
+              <input type="radio" id="q3-3" name="q3" value="3" /><label for="q3-3" class="opt">B2+ <span class="pts">+3</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q4.l">4 · Englisch-Kenntnisse</label>
+            <div class="hint" data-i18n="oc.q4.h">Bonus für C1.</div>
+            <div class="calc-options">
+              <input type="radio" id="q4-0" name="q4" value="0" checked /><label for="q4-0" class="opt"><span data-i18n="oc.q4.o0">Unter C1</span> <span class="pts">0</span></label>
+              <input type="radio" id="q4-1" name="q4" value="1" /><label for="q4-1" class="opt"><span data-i18n="oc.q4.o1">C1 oder höher</span> <span class="pts">+1</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q5.l">5 · Alter</label>
+            <div class="hint" data-i18n="oc.q5.h">Jüngere Bewerber:innen erhalten mehr Punkte.</div>
+            <div class="calc-options">
+              <input type="radio" id="q5-0" name="q5" value="0" checked /><label for="q5-0" class="opt"><span data-i18n="oc.q5.o0">Über 40</span> <span class="pts">0</span></label>
+              <input type="radio" id="q5-1" name="q5" value="1" /><label for="q5-1" class="opt"><span data-i18n="oc.q5.o1">35–40 Jahre</span> <span class="pts">+1</span></label>
+              <input type="radio" id="q5-2" name="q5" value="2" /><label for="q5-2" class="opt"><span data-i18n="oc.q5.o2">Unter 35</span> <span class="pts">+2</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q6.l">6 · Bezug zu Deutschland</label>
+            <div class="hint" data-i18n="oc.q6.h">Mindestens 6 Monate Aufenthalt.</div>
+            <div class="calc-options">
+              <input type="radio" id="q6-0" name="q6" value="0" checked /><label for="q6-0" class="opt"><span data-i18n="oc.q6.o0">Nein / nur Tourismus</span> <span class="pts">0</span></label>
+              <input type="radio" id="q6-1" name="q6" value="1" /><label for="q6-1" class="opt"><span data-i18n="oc.q6.o1">Ja</span> <span class="pts">+1</span></label>
+            </div>
+          </div>
+          <div class="calc-q">
+            <label data-i18n="oc.q7.l">7 · Mit Ehe-/Lebenspartner:in</label>
+            <div class="hint" data-i18n="oc.q7.h">Beide qualifizieren gemeinsam.</div>
+            <div class="calc-options">
+              <input type="radio" id="q7-0" name="q7" value="0" checked /><label for="q7-0" class="opt"><span data-i18n="oc.q7.o0">Nein</span> <span class="pts">0</span></label>
+              <input type="radio" id="q7-1" name="q7" value="1" /><label for="q7-1" class="opt"><span data-i18n="oc.q7.o1">Ja</span> <span class="pts">+1</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-result" id="calc-result">
+          <div class="label-top" data-i18n="oc.result.label">Ihr Punktestand</div>
+          <div class="score"><b id="score-num">0</b></div>
+          <div class="of" data-i18n="oc.result.of">von 6 benötigten Punkten</div>
+          <div class="calc-bar"><div id="score-bar" style="width: 0%;"></div></div>
+          <div class="verdict not-yet" id="verdict">
+            <div id="verdict-title" data-i18n="oc.verdict.notyet">Noch nicht qualifiziert</div>
+            <div class="verdict-text" id="verdict-text" data-i18n="oc.verdict.init">Beantworten Sie die Fragen.</div>
+          </div>
+          <div class="calc-cta">
+            <a href="#kontakt" class="btn-primary"><span data-i18n="oc.result.cta">Kostenfrei beraten lassen</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-note reveal" data-i18n="oc.note.calc"><strong>Hinweis:</strong> Dieser Selbst-Check folgt den offiziellen Kriterien.</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="oc.what.eyebrow">Was die Chancenkarte erlaubt</div>
+      <h2 class="section-title"><span data-i18n="oc.what.title.a">Mehr als nur</span><br /><b data-i18n="oc.what.title.b">ein Jobsuche-Visum.</b></h2>
+      <p class="section-lede" data-i18n="oc.what.lede">Sie dürfen mit der Chancenkarte bereits arbeiten — in Maßen.</p>
+    </div>
+    <div class="what-grid">
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3 data-i18n="oc.w1.t">20 Std./Woche arbeiten</h3><p data-i18n="oc.w1.d">Bis zu 20 Stunden pro Woche jobben.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3 data-i18n="oc.w2.t">2 Wochen Probearbeit</h3><p data-i18n="oc.w2.d">Bis zu 14 Tage Probebeschäftigung.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div><h3 data-i18n="oc.w3.t">Anerkennung nachholen</h3><p data-i18n="oc.w3.d">Anerkennung während der 12 Monate organisieren.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg></div><h3 data-i18n="oc.w4.t">Verlängerung möglich</h3><p data-i18n="oc.w4.d">Bis zu 2 weitere Jahre möglich.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg></div><h3 data-i18n="oc.w5.t">Familie nachholen</h3><p data-i18n="oc.w5.d">Partner:innen können gemeinsam einreisen.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div><h3 data-i18n="oc.w6.t">Übergang zur Blue Card</h3><p data-i18n="oc.w6.d">Nahtloser Wechsel zur EU Blue Card.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="oc.proc.eyebrow">Mit Trivar</div>
+      <h2 class="section-title"><span data-i18n="oc.proc.title.a">Vier Schritte.</span><br /><b data-i18n="oc.proc.title.b">Ein Antrag.</b></h2>
+      <p class="section-lede" data-i18n="oc.proc.lede">Vom Selbst-Check bis zur ersten Schicht in Deutschland.</p>
+    </div>
+    <div class="process-wrap">
+      <div class="process-line"></div>
+      <div class="process-step reveal">
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 01</div><h4 data-i18n="oc.proc.1.t">Eignungsanalyse</h4><p data-i18n="oc.proc.1.d">30 Minuten kostenfrei.</p></div>
+        <div class="process-node">01</div><div class="process-spacer"></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-spacer"></div><div class="process-node">02</div>
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 02</div><h4 data-i18n="oc.proc.2.t">Dokumenten-Mappe</h4><p data-i18n="oc.proc.2.d">Wir helfen bei Anabin und Übersetzungen.</p></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 03</div><h4 data-i18n="oc.proc.3.t">Sperrkonto & Antrag</h4><p data-i18n="oc.proc.3.d">Wir beraten bei Sperrkonto und CSP-Antrag.</p></div>
+        <div class="process-node">03</div><div class="process-spacer"></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-spacer"></div><div class="process-node">04</div>
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 04</div><h4 data-i18n="oc.proc.4.t">Ankunft in Deutschland</h4><p data-i18n="oc.proc.4.d">Anmeldung, Krankenversicherung, Steuer-ID.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="reveal" style="text-align: center;">
+      <div class="section-eyebrow" style="justify-content: center;" data-i18n="oc.faq.eyebrow">FAQ</div>
+      <h2 class="section-title" style="margin: 0 auto 24px;"><span data-i18n="oc.faq.title.a">Häufige Fragen</span><br /><b data-i18n="oc.faq.title.b">zur Chancenkarte.</b></h2>
+    </div>
+    <div class="faq reveal">
+      <details class="faq-item"><summary data-i18n="oc.faq.q1">Wer kann die Chancenkarte beantragen?</summary><p data-i18n="oc.faq.a1">Drittstaatsangehörige mit anerkanntem Abschluss.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q2">Wie lange dauert die Bearbeitung?</summary><p data-i18n="oc.faq.a2">3 bis 5 Monate.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q3">Wie viel Geld muss ich nachweisen?</summary><p data-i18n="oc.faq.a3">€1.091/Monat oder €13.092/Jahr.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q4">Was kostet die Chancenkarte?</summary><p data-i18n="oc.faq.a4">€75 Visumsgebühr.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q5">Kann ich studieren?</summary><p data-i18n="oc.faq.a5">Nein, dafür brauchen Sie ein Studentenvisum.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q6">Was passiert nach 12 Monaten ohne Job?</summary><p data-i18n="oc.faq.a6">Sie müssen Deutschland verlassen.</p></details>
+      <details class="faq-item"><summary data-i18n="oc.faq.q7">Kann meine Familie mitkommen?</summary><p data-i18n="oc.faq.a7">Ja, gemeinsame Einreise möglich.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="kontakt">
+  <div class="container">
+    <div class="final-cta-card reveal">
+      <h2><span data-i18n="oc.cta.title.a">Bereit für Ihre</span><br /><b data-i18n="oc.cta.title.b">Chance auf Deutschland?</b></h2>
+      <p data-i18n="oc.cta.body">Buchen Sie Ihr kostenfreies Erstgespräch.</p>
+      <div class="cta-row">
+        <a href="mailto:Contact@trivar.eu" class="btn-primary"><span data-i18n="oc.cta.btn">Erstgespräch buchen</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="tel:+491637240948" class="btn-ghost" data-i18n="cta.call">Direkt anrufen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="media-section reveal">
+  <div class="container">
+    <div class="media-grid">
+      <div class="media-frame">
+        <img src="https://images.pexels.com/photos/7651733/pexels-photo-7651733.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Diverse professionals collaborating in a modern office in Germany" loading="lazy" />
+      </div>
+      <div class="media-text">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="img.card.team.eyebrow">Berufseinstieg</span></div>
+        <h3><span data-i18n="img.card.team.title.a">Vom 1. Tag </span><b data-i18n="img.card.team.title.b">in Deutschlands Arbeitswelt.</b></h3>
+        <p data-i18n="img.card.team.body">Mit der Chancenkarte arbeiten Sie 20 Stunden/Woche und können Probearbeit für jeweils 2 Wochen leisten. Wir helfen Ihnen, schnell den richtigen Arbeitgeber zu finden.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="media-section reveal">
+  <div class="container">
+    <div class="media-grid reverse">
+      <div class="media-frame">
+        <img src="https://images.pexels.com/photos/7691709/pexels-photo-7691709.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Professional sealing a deal with a handshake in office" loading="lazy" />
+      </div>
+      <div class="media-text">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="img.card.deal.eyebrow">Vom Punktesystem zum Vertrag</span></div>
+        <h3><span data-i18n="img.card.deal.title.a">Sechs Punkte </span><b data-i18n="img.card.deal.title.b">sind erst der Anfang.</b></h3>
+        <p data-i18n="img.card.deal.body">Die Karte öffnet die Tür – wir begleiten Sie weiter: Sprachkurs, Anschriftung, Kontoeröffnung, erstes Vorstellungsgespräch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="trivar-icon.png" alt="Trivar" /><p><strong style="color:var(--cyan);">Trivar UG</strong> — <span data-i18n="foot.brand">Visa- & Chancenkarten-Beratung.</span></p></div>
+      <div class="footer-col"><h5 data-i18n="foot.col1">Services</h5><a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a><a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a><a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a><a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col2">Unternehmen</h5><a href="index.html" data-i18n="nav.home">Home</a><a href="kontakt.html" data-i18n="foot.col2.contact">Kontakt</a><a href="karriere.html" data-i18n="foot.col2.careers">Karriere</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col3">Rechtliches</h5><a href="impressum.html" data-i18n="foot.col3.imp">Impressum</a><a href="datenschutz.html" data-i18n="foot.col3.privacy">Datenschutz</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="foot.copyright">© 2026 Trivar UG (haftungsbeschränkt).</span><span>DE / EN / HI / TE / UR</span></div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+/* TRIVAR — shared interactions */
+
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// Mouse-follow glow on glass cards
+document.querySelectorAll('.glass-card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', mx + '%');
+    card.style.setProperty('--my', my + '%');
+  });
+});
+
+// Mobile burger menu
+const burger = document.querySelector('.nav-burger');
+const navLinks = document.querySelector('.nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a:not(.nav-cta)').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+</script>
+<script>
+  function recalc() {
+    let total = 0;
+    for (let i = 1; i <= 7; i++) {
+      const el = document.querySelector(`input[name="q${i}"]:checked`);
+      if (el) total += parseInt(el.value, 10);
+    }
+    document.getElementById('score-num').textContent = total;
+    const pct = Math.min(100, (total / 6) * 100);
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    const verdict = document.getElementById('verdict');
+    const title = document.getElementById('verdict-title');
+    const text = document.getElementById('verdict-text');
+    verdict.classList.remove('qualified', 'almost', 'not-yet');
+
+    const lang = (typeof getLang === 'function') ? getLang() : 'de';
+    const T = (typeof t === 'function') ? t : (k) => k;
+    const missing = 6 - total;
+
+    if (total >= 6) {
+      verdict.classList.add('qualified');
+      title.textContent = T('oc.verdict.q');
+      text.textContent = T('oc.verdict.q.t');
+    } else if (total >= 4) {
+      verdict.classList.add('almost');
+      title.textContent = T('oc.verdict.a').replace('{n}', missing);
+      text.textContent = T('oc.verdict.a.t');
+    } else {
+      verdict.classList.add('not-yet');
+      title.textContent = T('oc.verdict.n').replace('{n}', missing);
+      text.textContent = T('oc.verdict.n.t');
+    }
+  }
+  document.querySelectorAll('input[type="radio"][name^="q"]').forEach(r => r.addEventListener('change', recalc));
+  // Initial run after i18n applies
+  setTimeout(recalc, 0);
+</script>
+<script src="scripts.js"></script>
+</body>
+</html>

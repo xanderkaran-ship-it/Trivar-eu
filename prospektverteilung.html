@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trivar — Prospektverteilung. Klimaneutral. GPS-verifiziert.</title>
+<link rel="icon" type="image/png" href="trivar-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero { min-height: 90vh; padding: 140px 0 80px; display: flex; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+  h1.hero-title { font-size: clamp(40px, 6.5vw, 84px); font-weight: 200; line-height: 0.98; letter-spacing: -0.04em; margin: 28px 0; }
+  h1.hero-title .strong { font-weight: 800; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1.hero-title .italic-thin { font-style: italic; font-weight: 200; color: var(--chrome); }
+  .hero-sub { font-size: clamp(16px, 1.4vw, 19px); color: var(--txt-md); max-width: 540px; margin-bottom: 40px; }
+  .hero-visual { position: relative; aspect-ratio: 1; max-width: 480px; margin-left: auto; }
+  .hero-logo { position: absolute; inset: 25%; background-image: url('trivar-logo.png'); background-size: contain; background-position: center; background-repeat: no-repeat; filter: drop-shadow(0 0 60px rgba(53, 111, 174,0.6)); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+  .ring { position: absolute; inset: 0; border: 1px solid rgba(53, 111, 174, 0.2); border-radius: 50%; border-top-color: var(--txt-md); }
+  .ring.r1 { animation: spin 20s linear infinite; }
+  .ring.r2 { inset: 8%; animation: spin 30s linear infinite reverse; border-top-color: rgba(102, 170, 220, 0.5); }
+  .ring.r3 { inset: 16%; animation: spin 40s linear infinite; border-top-color: rgba(53, 111, 174, 0.4); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .orbit-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--bright); box-shadow: 0 0 16px var(--bright); top: 50%; left: 0; transform: translate(-50%, -50%); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 960px) { .services-grid { grid-template-columns: 1fr; } }
+  .service-meta { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(53, 111, 174, 0.18); display: flex; justify-content: space-between; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .service-meta span:first-child { color: var(--txt-lo); }
+  .service-meta span:last-child { color: var(--bright); font-weight: 600; }
+  .process-wrap { position: relative; }
+  .process-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, var(--chrome) 20%, var(--chrome) 80%, transparent); opacity: 0.3; }
+  @media (max-width: 820px) { .process-line { left: 28px; } }
+  .process-step { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: center; margin-bottom: 60px; position: relative; }
+  .process-step:last-child { margin-bottom: 0; }
+  @media (max-width: 820px) { .process-step { grid-template-columns: 56px 1fr; gap: 24px; } .process-step .process-spacer { display: none; } }
+  .process-content { padding: 28px; background: rgba(6, 17, 45, 0.45); border: 1px solid rgba(53, 111, 174, 0.2); border-radius: var(--radius-m); }
+  .process-content .step-num { font-size: 12px; letter-spacing: 0.2em; color: var(--chrome); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+  .process-content h4 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--txt-hi); }
+  .process-content p { color: var(--txt-md); font-size: 15px; }
+  .process-step:nth-child(even) .process-content:nth-of-type(1) { grid-column: 3; }
+  .process-step:nth-child(even) .process-spacer { grid-column: 1; }
+  @media (max-width: 820px) { .process-step .process-content { grid-column: 2 !important; } .process-step .process-spacer { display: none !important; } }
+  .process-node { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--chrome), var(--steel)); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--txt-hi); font-size: 18px; box-shadow: 0 0 0 8px var(--abyss), 0 0 0 9px rgba(53, 111, 174, 0.3), 0 0 30px rgba(53, 111, 174, 0.5); position: relative; z-index: 2; }
+  @media (max-width: 820px) { .process-node { grid-column: 1; grid-row: 1; } }
+  .tiers { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  @media (max-width: 960px) { .tiers { grid-template-columns: 1fr; } }
+  .tier { padding: 40px 32px; border-radius: var(--radius-l); background: linear-gradient(180deg, rgba(6, 17, 45, 0.65), rgba(3, 9, 26, 0.45)); border: 1px solid rgba(53, 111, 174, 0.2); position: relative; }
+  .tier.featured { background: linear-gradient(180deg, rgba(53, 111, 174, 0.22), rgba(53, 111, 174,0.06)); border-color: rgba(102, 170, 220, 0.5); box-shadow: var(--shadow-glow), var(--shadow-deep); transform: scale(1.02); }
+  @media (max-width: 960px) { .tier.featured { transform: none; } }
+  .tier-badge { position: absolute; top: -12px; right: 24px; padding: 6px 14px; border-radius: 100px; font-size: 11px; letter-spacing: 0.15em; font-weight: 700; text-transform: uppercase; background: linear-gradient(135deg, var(--cyan), var(--chrome)); color: var(--abyss); box-shadow: 0 8px 20px rgba(102, 170, 220, 0.4); }
+  .tier h4 { font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--chrome); font-weight: 600; margin-bottom: 16px; }
+  .tier .tier-name { font-size: 32px; font-weight: 800; color: var(--txt-hi); letter-spacing: -0.02em; margin-bottom: 8px; }
+  .tier .tier-tag { font-size: 14px; color: var(--txt-lo); margin-bottom: 28px; }
+  .tier .tier-cta { margin-top: 28px; width: 100%; padding: 14px; border-radius: 100px; text-align: center; font-weight: 600; font-size: 14px; cursor: pointer; background: rgba(53, 111, 174, 0.12); border: 1px solid rgba(102, 170, 220, 0.25); color: var(--cyan); text-decoration: none; transition: all 0.3s; display: block; }
+  .tier.featured .tier-cta { background: linear-gradient(135deg, var(--cyan), var(--chrome)); color: var(--abyss); border-color: transparent; }
+  .tier-cta:hover { transform: translateY(-2px); }
+  .trust { padding: 80px 0; border-top: 1px solid rgba(53, 111, 174, 0.12); border-bottom: 1px solid rgba(53, 111, 174, 0.12); }
+  .trust-label { text-align: center; font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--txt-lo); margin-bottom: 32px; font-weight: 600; }
+  .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 24px; align-items: center; }
+  .trust-tag { padding: 10px 20px; border-radius: 100px; border: 1px solid rgba(53, 111, 174, 0.25); background: rgba(53, 111, 174, 0.06); font-size: 13px; font-weight: 500; color: var(--txt-md); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div><div class="grain"></div>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="nav-brand"><img src="trivar-icon.png" alt="Trivar" /><span class="name">TRIVAR</span></a>
+    <button class="nav-burger" aria-label="Menu"><span></span></button>
+    <div class="nav-links">
+      <div class="lang-toggle"><button data-lang="de">DE</button><button data-lang="en">EN</button></div>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="prospektverteilung.html" class="active" data-i18n="nav.prospekt">Prospektverteilung</a>
+      <a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a>
+      <a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a>
+      <a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a>
+      <a href="kontakt.html" class="nav-cta" data-i18n="nav.contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow fade-1"><span class="pulse"></span><span data-i18n="pv.eyebrow">Klimaneutrale Prospektverteilung</span></div>
+        <h1 class="hero-title fade-2">
+          <span data-i18n="pv.title.l1">Vom Drucker</span><br />
+          <span data-i18n="pv.title.l2a">bis zum </span><span class="strong" data-i18n="pv.title.l2b">Briefkasten</span><span data-i18n="pv.title.l2c">.</span><br />
+          <span class="italic-thin" data-i18n="pv.title.l3">CO₂-neutral.</span>
+        </h1>
+        <p class="hero-sub fade-3" data-i18n="pv.sub">Trivar ist Prospektverteilung der nächsten Generation.</p>
+        <div class="cta-row fade-4">
+          <a href="#kontakt" class="btn-primary"><span data-i18n="pv.cta1">Kostenfreies Angebot</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a href="#leistungen" class="btn-ghost" data-i18n="pv.cta2">Leistungen ansehen</a>
+        </div>
+      </div>
+      <div class="hero-visual"><div class="hero-photo"><img src="https://images.pexels.com/photos/9461451/pexels-photo-9461451.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Bicycle courier in action — door-to-door flyer distribution" loading="eager" /></div><div class="ring r1"><div class="orbit-dot"></div></div><div class="ring r2"></div><div class="ring r3"></div><div class="hero-logo"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="stats-band reveal">
+    <div class="stat-item"><div class="big">12 M+</div><div class="label" data-i18n="pv.band1">Prospekte / Jahr</div></div>
+    <div class="stat-item"><div class="big">340+</div><div class="label" data-i18n="pv.band2">PLZ-Gebiete</div></div>
+    <div class="stat-item"><div class="big">−87%</div><div class="label" data-i18n="pv.band3">CO₂ vs. Branchenschnitt</div></div>
+    <div class="stat-item"><div class="big">24h</div><div class="label" data-i18n="pv.band4">Reporting-Frist</div></div>
+  </div>
+</div>
+
+<section id="leistungen">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="pv.svc.eyebrow">Leistungen</div>
+      <h2 class="section-title"><span data-i18n="pv.svc.title.a">Eine Plattform.</span><br /><b data-i18n="pv.svc.title.b">Alle Verteilarten.</b></h2>
+      <p class="section-lede" data-i18n="pv.svc.lede">Ob Haushaltswerbung, Beilagen oder Mikrosegmente.</p>
+    </div>
+    <div class="services-grid">
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="pv.s1.title">Haushaltswerbung (HHW)</h3>
+        <p data-i18n="pv.s1.desc">Klassische Direktverteilung an Privathaushalte.</p>
+        <div class="service-meta"><span data-i18n="pv.s1.m1">Reichweite</span><span data-i18n="pv.s1.m2">bis 100%</span></div>
+      </div>
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 14h2"/></svg></div>
+        <h3 data-i18n="pv.s2.title">Beilagenverteilung</h3>
+        <p data-i18n="pv.s2.desc">Prospekte als Beilage in Wochenblättern.</p>
+        <div class="service-meta"><span data-i18n="pv.s2.m1">Format</span><span>A4 / DIN lang</span></div>
+      </div>
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/></svg></div>
+        <h3 data-i18n="pv.s3.title">Geo-Targeting</h3>
+        <p data-i18n="pv.s3.desc">Verteilung nach Mikrogebieten und Kaufkraft.</p>
+        <div class="service-meta"><span data-i18n="pv.s3.m1">Genauigkeit</span><span data-i18n="pv.s3.m2">Straßenebene</span></div>
+      </div>
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3 data-i18n="pv.s4.title">GPS-Live-Tracking</h3>
+        <p data-i18n="pv.s4.desc">Jede Verteilroute wird live per GPS aufgezeichnet.</p>
+        <div class="service-meta"><span data-i18n="pv.s4.m1">Frequenz</span><span>10 sec / Ping</span></div>
+      </div>
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
+        <h3 data-i18n="pv.s5.title">KI-Routenoptimierung</h3>
+        <p data-i18n="pv.s5.desc">Routen nach Wegezeit und CO₂.</p>
+        <div class="service-meta"><span data-i18n="pv.s5.m1">Einsparung</span><span data-i18n="pv.s5.m2">−34% km</span></div>
+      </div>
+      <div class="glass-card reveal">
+        <div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/></svg></div>
+        <h3 data-i18n="pv.s6.title">Klimaneutral-Zertifikat</h3>
+        <p data-i18n="pv.s6.desc">Digitales Klimazertifikat mit Scope 1–3.</p>
+        <div class="service-meta"><span data-i18n="pv.s6.m1">Standard</span><span>GHG Protocol</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prozess">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="pv.proc.eyebrow">So funktioniert Trivar</div>
+      <h2 class="section-title"><span data-i18n="pv.proc.title.a">Vier Schritte.</span><br /><b data-i18n="pv.proc.title.b">Volle Kontrolle.</b></h2>
+      <p class="section-lede" data-i18n="pv.proc.lede">Vom Briefing bis zum Klimazertifikat.</p>
+    </div>
+    <div class="process-wrap">
+      <div class="process-line"></div>
+      <div class="process-step reveal">
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 01</div><h4 data-i18n="pv.proc.1.t">Briefing & Gebietsplanung</h4><p data-i18n="pv.proc.1.d">Sie definieren Zielgruppe und Verteilgebiet.</p></div>
+        <div class="process-node">01</div><div class="process-spacer"></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-spacer"></div><div class="process-node">02</div>
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 02</div><h4 data-i18n="pv.proc.2.t">Druck & Anlieferung</h4><p data-i18n="pv.proc.2.d">Druck bei zertifizierten Klimadruckereien.</p></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 03</div><h4 data-i18n="pv.proc.3.t">GPS-verifizierte Zustellung</h4><p data-i18n="pv.proc.3.d">Briefkasten für Briefkasten mit Live-GPS.</p></div>
+        <div class="process-node">03</div><div class="process-spacer"></div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-spacer"></div><div class="process-node">04</div>
+        <div class="process-content"><div class="step-num"><span data-i18n="pv.step.label">Schritt</span> 04</div><h4 data-i18n="pv.proc.4.t">Report & Zertifikat</h4><p data-i18n="pv.proc.4.d">Innerhalb von 24h erhalten Sie den Report.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tarife">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="pv.tier.eyebrow">Tarife</div>
+      <h2 class="section-title"><span data-i18n="pv.tier.title.a">Drei Pakete.</span><br /><b data-i18n="pv.tier.title.b">Klare Abrechnung.</b></h2>
+      <p class="section-lede" data-i18n="pv.tier.lede">Wir berechnen pro 1.000 zugestellte Prospekte.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier reveal">
+        <h4 data-i18n="pv.tier.t1">Standard</h4>
+        <div class="tier-name" data-i18n="pv.tier.t1.name">Basis</div>
+        <div class="tier-tag" data-i18n="pv.tier.t1.tag">Für regionale Aktionen & KMU</div>
+        <ul class="check-list">
+          <li data-i18n="pv.tier.t1.l1">Haushaltsverteilung nach PLZ</li>
+          <li data-i18n="pv.tier.t1.l2">GPS-Verteilnachweis</li>
+          <li data-i18n="pv.tier.t1.l3">Klimaneutral-Zertifikat</li>
+          <li data-i18n="pv.tier.t1.l4">Standard-Reporting (PDF)</li>
+          <li data-i18n="pv.tier.t1.l5">Auflagen ab 5.000 Stück</li>
+        </ul>
+        <a href="#kontakt" class="tier-cta" data-i18n="pv.tier.cta">Angebot anfordern</a>
+      </div>
+      <div class="tier featured reveal">
+        <span class="tier-badge" data-i18n="pv.tier.recommended">Empfohlen</span>
+        <h4 data-i18n="pv.tier.t2">Plus</h4>
+        <div class="tier-name" data-i18n="pv.tier.t2.name">Professional</div>
+        <div class="tier-tag" data-i18n="pv.tier.t2.tag">Für Mehrkanal-Kampagnen</div>
+        <ul class="check-list">
+          <li data-i18n="pv.tier.t2.l1">Alles aus „Basis"</li>
+          <li data-i18n="pv.tier.t2.l2">Mikro-Geo-Targeting</li>
+          <li data-i18n="pv.tier.t2.l3">Live-GPS im Kundenportal</li>
+          <li data-i18n="pv.tier.t2.l4">Foto-Stichproben</li>
+          <li data-i18n="pv.tier.t2.l5">Erweiterte Analytics & Heatmaps</li>
+          <li data-i18n="pv.tier.t2.l6">Persönlicher Ansprechpartner</li>
+        </ul>
+        <a href="#kontakt" class="tier-cta" data-i18n="pv.tier.cta">Angebot anfordern</a>
+      </div>
+      <div class="tier reveal">
+        <h4 data-i18n="pv.tier.t3">Enterprise</h4>
+        <div class="tier-name" data-i18n="pv.tier.t3.name">Konzern</div>
+        <div class="tier-tag" data-i18n="pv.tier.t3.tag">Für bundesweite Roll-outs</div>
+        <ul class="check-list">
+          <li data-i18n="pv.tier.t3.l1">Alles aus „Professional"</li>
+          <li data-i18n="pv.tier.t3.l2">Bundesweite SLA</li>
+          <li data-i18n="pv.tier.t3.l3">API-Anbindung an DMS / CRM</li>
+          <li data-i18n="pv.tier.t3.l4">ESG-Report nach GHG Protocol</li>
+          <li data-i18n="pv.tier.t3.l5">Print-Workflow-Integration</li>
+          <li data-i18n="pv.tier.t3.l6">Dediziertes Account-Team</li>
+        </ul>
+        <a href="#kontakt" class="tier-cta" data-i18n="pv.tier.t3.cta">Beratung buchen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="container">
+    <div class="trust-label" data-i18n="pv.trust.label">Standards & Compliance</div>
+    <div class="trust-row">
+      <div class="trust-tag" data-i18n="pv.trust.t1">GHG Protocol Scope 1–3</div>
+      <div class="trust-tag" data-i18n="pv.trust.t2">DSGVO-konform</div>
+      <div class="trust-tag">Verra VCS</div>
+      <div class="trust-tag">Gold Standard</div>
+      <div class="trust-tag" data-i18n="pv.trust.t5">ISO 14001-orientiert</div>
+      <div class="trust-tag" data-i18n="pv.trust.t6">Made in Germany</div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="kontakt">
+  <div class="container">
+    <div class="final-cta-card reveal">
+      <h2><span data-i18n="pv.cta.title.a">Bereit für Werbung,</span><br /><b data-i18n="pv.cta.title.b">die wirkt — und nicht der Welt schadet?</b></h2>
+      <p data-i18n="pv.cta.body">Senden Sie uns Auflage, Zielgebiet und Wunschtermin.</p>
+      <div class="cta-row">
+        <a href="mailto:Contact@trivar.eu" class="btn-primary"><span data-i18n="pv.cta.btn">Angebot in 24h</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="tel:+491637240948" class="btn-ghost" data-i18n="cta.call">Direkt anrufen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="media-section reveal">
+  <div class="container">
+    <div class="media-grid">
+      <div class="media-frame">
+        <img src="https://images.pexels.com/photos/31638920/pexels-photo-31638920.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Electric cargo bike at post office for sustainable urban delivery" loading="lazy" />
+      </div>
+      <div class="media-text">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="img.pv.green.eyebrow">Lastenrad-Flotte</span></div>
+        <h3><span data-i18n="img.pv.green.title.a">Elektrisch.</span> <b data-i18n="img.pv.green.title.b">Lautlos. Lokal.</b></h3>
+        <p data-i18n="img.pv.green.body">Unsere E-Lastenräder verteilen täglich bis zu 600 Haushalte – ohne Lärm, ohne Abgase, ohne Stau. Perfekt für die letzte Meile in der Innenstadt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="media-section reveal">
+  <div class="container">
+    <div class="media-grid reverse">
+      <div class="media-frame">
+        <img src="https://images.pexels.com/photos/9461451/pexels-photo-9461451.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bicycle courier on the street making deliveries" loading="lazy" />
+      </div>
+      <div class="media-text">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="img.pv.field.eyebrow">Im Einsatz</span></div>
+        <h3><span data-i18n="img.pv.field.title.a">Verteiler:innen,</span> <b data-i18n="img.pv.field.title.b">die Verantwortung tragen.</b></h3>
+        <p data-i18n="img.pv.field.body">Faire Bezahlung über Mindestlohn, GPS-Tracking nur auf öffentlichen Verkehrsflächen, transparente Stundenabrechnung – wir behandeln unser Team als Profis, nicht als Tagelöhner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="trivar-icon.png" alt="Trivar" /><p><strong style="color:var(--cyan);">Trivar UG</strong> — <span data-i18n="foot.brand">Klimaneutrale Werbelogistik &amp; Lebensberatung.</span></p></div>
+      <div class="footer-col"><h5 data-i18n="foot.col1">Services</h5><a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a><a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a><a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a><a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col2">Unternehmen</h5><a href="index.html" data-i18n="nav.home">Home</a><a href="kontakt.html" data-i18n="foot.col2.contact">Kontakt</a><a href="karriere.html" data-i18n="foot.col2.careers">Karriere</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col3">Rechtliches</h5><a href="impressum.html" data-i18n="foot.col3.imp">Impressum</a><a href="datenschutz.html" data-i18n="foot.col3.privacy">Datenschutz</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="foot.copyright">© 2026 Trivar UG (haftungsbeschränkt).</span><span data-i18n="foot.tag.climate">Klimaneutral seit Tag 1.</span></div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+/* TRIVAR — shared interactions */
+
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// Mouse-follow glow on glass cards
+document.querySelectorAll('.glass-card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', mx + '%');
+    card.style.setProperty('--my', my + '%');
+  });
+});
+
+// Mobile burger menu
+const burger = document.querySelector('.nav-burger');
+const navLinks = document.querySelector('.nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a:not(.nav-cta)').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+</script>
+<script src="scripts.js"></script>
+</body>
+</html>

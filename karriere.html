@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trivar — Karriere</title>
+<link rel="icon" type="image/png" href="trivar-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero { min-height: 88vh; padding: 140px 0 80px; display: flex; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+  h1.hero-title { font-size: clamp(40px, 6.5vw, 84px); font-weight: 200; line-height: 1; letter-spacing: -0.04em; margin: 28px 0; }
+  h1.hero-title .strong { font-weight: 800; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1.hero-title .italic-thin { font-style: italic; font-weight: 200; color: var(--chrome); }
+  .hero-sub { font-size: clamp(16px, 1.4vw, 19px); color: var(--txt-md); max-width: 540px; margin-bottom: 40px; }
+  .hero-visual { position: relative; aspect-ratio: 1; max-width: 480px; margin-left: auto; }
+  .hero-logo { position: absolute; inset: 8%; background-image: url('trivar-logo.png'); background-size: contain; background-position: center; background-repeat: no-repeat; filter: drop-shadow(0 0 60px rgba(53, 111, 174, 0.6)); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-16px);} }
+
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 960px) { .values-grid { grid-template-columns: 1fr; } }
+
+  .jobs-list { display: flex; flex-direction: column; gap: 16px; }
+  .job-card { padding: 28px clamp(20px, 3vw, 36px); border-radius: var(--radius-l); background: var(--grad-card); border: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto auto; gap: 24px; align-items: center; transition: all 0.3s; backdrop-filter: blur(16px); }
+  .job-card:hover { border-color: rgba(102, 170, 220, 0.45); transform: translateY(-2px); box-shadow: 0 20px 40px -20px rgba(53, 111, 174, 0.4); }
+  @media (max-width: 820px) { .job-card { grid-template-columns: 1fr; gap: 16px; } }
+  .job-info h3 { font-size: 20px; font-weight: 700; color: var(--txt-hi); margin-bottom: 6px; letter-spacing: -0.01em; }
+  .job-info p { font-size: 14px; color: var(--txt-md); margin-bottom: 12px; }
+  .job-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .job-tag { padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; background: rgba(53, 111, 174, 0.15); border: 1px solid rgba(53, 111, 174, 0.3); color: var(--cyan); }
+  .job-apply { padding: 12px 22px; border-radius: 100px; background: rgba(213, 235, 255, 0.08); border: 1px solid rgba(102, 170, 220, 0.3); color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; white-space: nowrap; }
+  .job-apply:hover { background: linear-gradient(135deg, var(--bright), var(--chrome)); color: var(--abyss); border-color: transparent; }
+  @media (max-width: 820px) { .job-apply { justify-self: start; } }
+
+  .pt-link { padding: 24px clamp(20px, 3vw, 36px); margin-top: 32px; border-radius: var(--radius-l); background: linear-gradient(180deg, rgba(53, 111, 174, 0.12), rgba(102, 170, 220, 0.04)); border: 1px solid rgba(102, 170, 220, 0.35); display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .pt-link p { font-size: 15px; color: var(--txt-md); }
+  .pt-link a { color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 14px; letter-spacing: 0.05em; }
+  .pt-link a:hover { color: var(--bright); }
+
+  .apply-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 960px) { .apply-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .apply-grid { grid-template-columns: 1fr; } }
+  .apply-step { padding: 32px 24px; border-radius: var(--radius-m); background: var(--grad-card); border: 1px solid var(--line); text-align: center; backdrop-filter: blur(16px); }
+  .apply-step .num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--chrome), var(--steel)); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-weight: 800; color: var(--txt-hi); font-size: 17px; box-shadow: 0 8px 20px rgba(53, 111, 174, 0.4); }
+  .apply-step h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--txt-hi); }
+  .apply-step p { font-size: 14px; color: var(--txt-md); }
+</style>
+</head>
+<body>
+<div class="mesh-bg"></div><div class="grain"></div>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html" class="nav-brand"><img src="trivar-icon.png" alt="Trivar" /><span class="name">TRIVAR</span></a>
+    <button class="nav-burger" aria-label="Menu"><span></span></button>
+    <div class="nav-links">
+      <div class="lang-toggle"><button data-lang="de">DE</button><button data-lang="en">EN</button></div>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a>
+      <a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a>
+      <a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a>
+      <a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a>
+      <a href="kontakt.html" class="nav-cta" data-i18n="nav.contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow fade-1"><span class="pulse"></span><span data-i18n="car.eyebrow">Karriere bei Trivar</span></div>
+        <h1 class="hero-title fade-2">
+          <span data-i18n="car.title.l1">Bauen Sie</span><br />
+          <span data-i18n="car.title.l2a">mit uns die </span><span class="strong" data-i18n="car.title.l2b">Werbelogistik</span><span data-i18n="car.title.l2c"> von morgen.</span><br />
+          <span class="italic-thin" data-i18n="car.title.l3">Klimaneutral. Fair. Digital.</span>
+        </h1>
+        <p class="hero-sub fade-3" data-i18n="car.sub">Wir sind ein junges Team aus Essen mit globalem Anspruch.</p>
+        <div class="cta-row fade-4">
+          <a href="#offene-stellen" class="btn-primary"><span data-i18n="car.cta1">Offene Stellen ansehen</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a href="#initiativ" class="btn-ghost" data-i18n="car.cta2">Initiativ bewerben</a>
+        </div>
+      </div>
+      <div class="hero-visual"><div class="hero-photo"><img src="https://images.pexels.com/photos/7651733/pexels-photo-7651733.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Multicultural Trivar team meeting in a modern office" loading="eager" /></div><div class="hero-logo"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="stats-band reveal">
+    <div class="stat-item"><div class="big">12+</div><div class="label" data-i18n="car.band1">Mitarbeitende</div></div>
+    <div class="stat-item"><div class="big">2</div><div class="label" data-i18n="car.band2">Standorte</div></div>
+    <div class="stat-item"><div class="big">5</div><div class="label" data-i18n="car.band3">Sprachen im Team</div></div>
+    <div class="stat-item"><div class="big">2024</div><div class="label" data-i18n="car.band4">CO₂-neutral seit</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="car.values.eyebrow">Was uns ausmacht</div>
+      <h2 class="section-title"><span data-i18n="car.values.title.a">Sechs Prinzipien.</span><br /><b data-i18n="car.values.title.b">Eine Kultur.</b></h2>
+      <p class="section-lede" data-i18n="car.values.lede">Wir reden nicht nur über grüne Werte – wir leben sie.</p>
+    </div>
+    <div class="values-grid">
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3 data-i18n="car.v1.t">Faire Bezahlung</h3><p data-i18n="car.v1.d">Transparente Gehaltsbänder. Mindestens 14 € pro Stunde – auch im Minijob.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3 data-i18n="car.v2.t">Flexible Arbeitszeit</h3><p data-i18n="car.v2.d">Vertrauensarbeitszeit, hybrides Arbeiten und Sabbatical-Möglichkeit nach 3 Jahren.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><h3 data-i18n="car.v3.t">Lernen & Entwicklung</h3><p data-i18n="car.v3.d">Persönliches Lernbudget von 1.500 € jährlich. Konferenzen, Sprachkurse, Zertifikate.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3 data-i18n="car.v4.t">Klimaneutrale Arbeit</h3><p data-i18n="car.v4.d">CO₂-neutrales Büro mit Ökostrom. Jobrad-Leasing. Klimakompensation.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3 data-i18n="car.v5.t">Ehrliche Kommunikation</h3><p data-i18n="car.v5.d">Flache Hierarchien, offene Bücher und ehrliches 360°-Feedback.</p></div>
+      <div class="glass-card reveal"><div class="glass-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M22 21v-2a4 4 0 0 0-3-3.85"/></svg></div><h3 data-i18n="car.v6.t">Vielfalt im Team</h3><p data-i18n="car.v6.d">Wir beschäftigen Menschen aus über 8 Ländern. Mehrsprachigkeit ist Vorteil.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="offene-stellen">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="car.open.eyebrow">Aktuell offene Stellen</div>
+      <h2 class="section-title"><span data-i18n="car.open.title.a">Ihre nächste</span><br /><b data-i18n="car.open.title.b">Aufgabe wartet.</b></h2>
+      <p class="section-lede" data-i18n="car.open.lede">Vom Werkstudent bis zur Senior-Position.</p>
+    </div>
+
+    <div class="jobs-list">
+      <div id="jobs-container" data-loading="true"><p class="jobs-loading" style="color:var(--txt-md);padding:24px;text-align:center;">Lade Stellenanzeigen…</p></div>
+    </div>
+
+    <div class="pt-link reveal">
+      <p>Sie suchen Verteiler-, Lager- oder Fahrer-Stellen? Diese listen wir gesondert auf der Part-Time-Jobs-Seite.</p>
+      <a href="part-time-jobs.html" data-i18n="car.j.flyer">Verteiler-Stellen ansehen →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow" data-i18n="car.proc.eyebrow">Bewerbungsablauf</div>
+      <h2 class="section-title"><span data-i18n="car.proc.title.a">Vier Schritte.</span><br /><b data-i18n="car.proc.title.b">Faires Verfahren.</b></h2>
+      <p class="section-lede" data-i18n="car.proc.lede">Keine endlosen Assessments.</p>
+    </div>
+    <div class="apply-grid">
+      <div class="apply-step reveal"><div class="num">1</div><h4 data-i18n="car.p1.t">Bewerbung senden</h4><p data-i18n="car.p1.d">CV plus 3 Sätze über sich. Anschreiben optional.</p></div>
+      <div class="apply-step reveal"><div class="num">2</div><h4 data-i18n="car.p2.t">Erstgespräch (30 Min.)</h4><p data-i18n="car.p2.d">Persönliches Kennenlernen mit Hiring Manager.</p></div>
+      <div class="apply-step reveal"><div class="num">3</div><h4 data-i18n="car.p3.t">Fachgespräch & Probetag</h4><p data-i18n="car.p3.d">Bezahlter Probetag im Team.</p></div>
+      <div class="apply-step reveal"><div class="num">4</div><h4 data-i18n="car.p4.t">Angebot & Start</h4><p data-i18n="car.p4.d">Faires Angebot innerhalb von 5 Werktagen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="initiativ">
+  <div class="container">
+    <div class="final-cta-card reveal">
+      <h2><span data-i18n="car.cta.title.a">Keine passende Stelle dabei?</span><br /><b data-i18n="car.cta.title.b">Initiativbewerbung willkommen.</b></h2>
+      <p data-i18n="car.cta.body">Wir suchen immer Menschen, die unsere Mission teilen.</p>
+      <div class="cta-row">
+        <a href="kontakt.html?topic=karriere" class="btn-primary"><span data-i18n="car.cta.btn">Jetzt initiativ bewerben</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="media-section reveal">
+  <div class="container">
+    <div class="media-grid">
+      <div class="media-frame">
+        <img src="https://images.pexels.com/photos/8171200/pexels-photo-8171200.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Trivar team in a modern office collaborating" loading="lazy" />
+      </div>
+      <div class="media-text">
+        <div class="eyebrow"><span class="pulse"></span><span data-i18n="img.car.team.eyebrow">Unser Team</span></div>
+        <h3><span data-i18n="img.car.team.title.a">Vielfältig.</span> <b data-i18n="img.car.team.title.b">Direkt. Verbindlich.</b></h3>
+        <p data-i18n="img.car.team.body">Wir sind 12 Menschen aus 8 Ländern, die in 5 Sprachen arbeiten. Flache Hierarchien, offene Bücher, ehrliches Feedback – und kein Performance-Theater.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="trivar-icon.png" alt="Trivar" /><p><strong style="color:var(--cyan);">Trivar UG</strong> — <span data-i18n="foot.brand">Klimaneutrale Werbelogistik & Lebensberatung. Made in Essen, geliefert in ganz Deutschland.</span></p></div>
+      <div class="footer-col"><h5 data-i18n="foot.col1">Services</h5><a href="prospektverteilung.html" data-i18n="nav.prospekt">Prospektverteilung</a><a href="visa-consultation.html" data-i18n="nav.visa">Visa Consultation</a><a href="opportunity-card.html" data-i18n="nav.card">Opportunity Card</a><a href="part-time-jobs.html" data-i18n="nav.jobs">Part-Time Jobs</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col2">Unternehmen</h5><a href="index.html" data-i18n="nav.home">Home</a><a href="kontakt.html" data-i18n="foot.col2.contact">Kontakt</a><a href="karriere.html" data-i18n="foot.col2.careers">Karriere</a></div>
+      <div class="footer-col"><h5 data-i18n="foot.col3">Rechtliches</h5><a href="impressum.html" data-i18n="foot.col3.imp">Impressum</a><a href="datenschutz.html" data-i18n="foot.col3.privacy">Datenschutz</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="foot.copyright">© 2026 Trivar UG (haftungsbeschränkt). Alle Rechte vorbehalten.</span><span data-i18n="foot.bottom">Essen · Deutschland · DE / EN / HI / TE / UR</span></div>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+/* TRIVAR — shared interactions */
+
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// Mouse-follow glow on glass cards
+document.querySelectorAll('.glass-card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mx', mx + '%');
+    card.style.setProperty('--my', my + '%');
+  });
+});
+
+// Mobile burger menu
+const burger = document.querySelector('.nav-burger');
+const navLinks = document.querySelector('.nav-links');
+if (burger && navLinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a:not(.nav-cta)').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+</script>
+<script src="scripts.js"></script>
+<script src="js/jobs.js"></script>
+</body>
+</html>
